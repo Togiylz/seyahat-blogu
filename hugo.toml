@@ -9,6 +9,7 @@ theme = "PaperMod"
 enableRobotsTXT = false # robots.txt static/ klasöründen geliyor
 removePathAccents = true # Türkçe karakterli URL'leri ASCII'ye çevirir (ş→s, ı→i)
 enableEmoji = true
+copyright = "© 2026 Seyahat Günlüğü"
 
 [pagination]
   pagerSize = 9
@@ -46,8 +47,8 @@ enableEmoji = true
   hideSummary = false
 
   [params.homeInfoParams]
-    Title = "Merhaba, hoş geldin ✈️"
-    Content = "Gezdiğim ülkeleri, şehirleri ve yollarda biriktirdiklerimi burada paylaşıyorum. Menüden ülkelere göz atabilir ya da arama yapabilirsin."
+    Title = "Yollarda biriken hikâyeler"
+    Content = "Gezdiğim ülkeler, şehirler ve yol boyu biriktirdiğim notlar — fotoğraflarıyla, rotalarıyla, küçük ipuçlarıyla."
 
   # Yazı kartlarında ve yazı sayfasında kapak fotoğrafı
   [params.cover]

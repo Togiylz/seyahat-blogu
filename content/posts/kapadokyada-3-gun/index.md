@@ -5,6 +5,9 @@ ulke: ["Türkiye"]
 sehir: ["Kapadokya"]
 etiket: ["Doğa", "Rehber"]
 summary: "Sıcak hava balonundan yeraltı şehrine, peri bacalarından vadi yürüyüşlerine — Kapadokya'da dolu dolu üç günün rehberi."
+cover:
+  image: "kapak.jpg"
+  alt: "Dağların arasında uzanan göl manzarası"
 ---
 
 Bu bir örnek yazıdır. Admin paneli kurulduktan sonra bu yazıyı silebilir ya da düzenleyebilirsiniz.

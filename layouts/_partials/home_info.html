@@ -1,0 +1,21 @@
+{{- with site.Params.homeInfoParams }}
+<section class="hero">
+  <div class="hero-media">
+    <img src="{{ "images/hero.jpg" | relURL }}" alt="" loading="eager" fetchpriority="high">
+    <div class="hero-overlay"></div>
+  </div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">{{ site.Title }}</p>
+    <h1>{{ .Title | markdownify }}</h1>
+    <div class="hero-text">
+      {{ $opts := dict "display" "block" }}
+      {{ .Content | $.Page.RenderString $opts }}
+    </div>
+    <div class="hero-actions">
+      <a class="hero-btn hero-btn--primary" href="{{ "ulke/" | relLangURL }}">Ülkelere Göz At</a>
+      <a class="hero-btn hero-btn--ghost" href="{{ "hakkimda/" | relLangURL }}">Hakkımda</a>
+    </div>
+  </div>
+</section>
+<h2 class="section-title">Son Yazılar</h2>
+{{- end -}}
