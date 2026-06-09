@@ -4,7 +4,7 @@
 # (Site configuration → Access & security → OAuth → Install provider → GitHub).
 backend:
   name: github
-  repo: KULLANICIADI/seyahat-blogu # TODO: GitHub repo adresinle değiştir
+  repo: Togiylz/seyahat-blogu
   branch: main
   commit_messages:
     create: "Yeni yazı: {{slug}}"
