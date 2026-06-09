@@ -1,0 +1,95 @@
+/* ── Seyahat Blogu özel tasarım ──
+   Palet: Ana Yeşil #4A7C59 · Açık Yeşil #E8F0EB · Krem #FAFAF8 · Koyu Gri #1F2937 · Orta Gri #6B7280
+   Fontlar: Playfair Display (başlıklar) · Inter (menü, meta) · Lora (yazı içeriği) */
+
+:root {
+    --theme: #FAFAF8;     /* sayfa arka planı: krem beyaz */
+    --entry: #FFFFFF;     /* yazı kartları */
+    --primary: #1F2937;   /* başlıklar, ana metin: koyu gri */
+    --secondary: #6B7280; /* tarih, meta bilgiler: orta gri */
+    --tertiary: #E8F0EB;  /* hover ve etiket zemini: açık yeşil */
+    --content: #1F2937;
+    --border: #E4E7E4;
+    --accent: #4A7C59;    /* ana yeşil: butonlar, aktif menü, vurgular */
+    --accent-dark: #3A6147;
+    --radius: 10px;
+}
+
+body {
+    font-family: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+/* Başlıklar ve logo: Playfair Display */
+.logo a,
+.post-title,
+.entry-header h1,
+.entry-header h2,
+.home-info .entry-header h1,
+.page-header h1 {
+    font-family: "Playfair Display", Georgia, serif;
+}
+
+/* Yazı içeriği: Lora */
+.post-content {
+    font-family: "Lora", Georgia, serif;
+    font-size: 1.06rem;
+    line-height: 1.8;
+}
+
+/* Yazı içi linkler yeşil */
+.post-content a {
+    color: var(--accent);
+    box-shadow: 0 1px 0 var(--accent);
+}
+.post-content a:hover {
+    color: var(--accent-dark);
+}
+
+/* Aktif menü öğesi yeşil */
+#menu a.active {
+    color: var(--accent);
+    font-weight: 600;
+}
+#menu a:hover {
+    color: var(--accent);
+}
+
+/* Logo vurgusu */
+.logo a {
+    color: var(--accent);
+}
+
+/* Etiket ve kategori kutuları: açık yeşil zemin, yeşil metin */
+.post-tags a,
+.terms-tags a {
+    background: var(--tertiary);
+    color: var(--accent-dark);
+}
+.post-tags a:hover,
+.terms-tags a:hover,
+.paginav a:hover {
+    background: #D9E7DE;
+}
+
+/* Kartlara yumuşak gölge ve hover efekti */
+.post-entry {
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 3px rgba(31, 41, 55, 0.05);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.post-entry:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(74, 124, 89, 0.12);
+}
+
+/* Okuma butonları, sayfalama vurguları */
+.page-link.current,
+button#theme-toggle:hover {
+    color: var(--accent);
+}
+
+/* Ana sayfa karşılama kutusu */
+.home-info {
+    border-left: 4px solid var(--accent);
+    padding-left: var(--gap);
+}

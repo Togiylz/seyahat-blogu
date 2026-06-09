@@ -1,0 +1,24 @@
+# ── Netlify build ayarları ──
+[build]
+  publish = "public"
+  command = "hugo --gc --minify"
+
+[build.environment]
+  HUGO_VERSION = "0.163.0"
+  HUGO_ENV = "production"
+  TZ = "Europe/Istanbul"
+
+# Deploy preview'larda da site düzgün derlensin
+[context.deploy-preview]
+  command = "hugo --gc --minify -b $DEPLOY_PRIME_URL"
+
+[context.branch-deploy]
+  command = "hugo --gc --minify -b $DEPLOY_PRIME_URL"
+
+# Güvenlik başlıkları
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"

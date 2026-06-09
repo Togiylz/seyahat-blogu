@@ -1,0 +1,93 @@
+# ── Decap CMS yapılandırması ──
+# GitHub'a push ettikten sonra "repo:" satırını kendi kullanıcıadı/repoadı ile güncelle.
+# Giriş: Netlify panelinde GitHub OAuth provider kurulmalı
+# (Site configuration → Access & security → OAuth → Install provider → GitHub).
+backend:
+  name: github
+  repo: KULLANICIADI/seyahat-blogu # TODO: GitHub repo adresinle değiştir
+  branch: main
+  commit_messages:
+    create: "Yeni yazı: {{slug}}"
+    update: "Güncelleme: {{slug}}"
+    delete: "Silindi: {{slug}}"
+    uploadMedia: "Görsel yüklendi: {{path}}"
+    deleteMedia: "Görsel silindi: {{path}}"
+
+locale: "tr" # panel arayüzü Türkçe
+
+site_url: https://example.netlify.app # TODO: gerçek domain ile değiştir
+logo_url: ""
+
+# Genel medya klasörü (logo vb. için); yazı görselleri yazının kendi klasörüne gider
+media_folder: "static/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "posts"
+    label: "Blog Yazıları"
+    label_singular: "Yazı"
+    folder: "content/posts"
+    create: true
+    delete: true
+    # Her yazı kendi klasöründe: content/posts/yazi-adi/index.md + görselleri
+    path: "{{slug}}/index"
+    media_folder: ""
+    public_folder: ""
+    slug: "{{slug}}"
+    summary: "{{title}} · {{day}}.{{month}}.{{year}}"
+    sortable_fields: ["date", "title"]
+    editor:
+      preview: false
+    fields:
+      - { label: "Başlık", name: "title", widget: "string", hint: "Yazının başlığı, örn: Kapadokya'da 3 Gün" }
+      - { label: "Yayın Tarihi", name: "date", widget: "datetime" }
+      - label: "Kapak Fotoğrafı"
+        name: "cover"
+        widget: "object"
+        collapsed: false
+        fields:
+          - { label: "Fotoğraf", name: "image", widget: "image", hint: "Sürükle-bırak ile yükleyebilirsin" }
+          - { label: "Fotoğraf Açıklaması (alt metin)", name: "alt", widget: "string", hint: "Görme engelli okuyucular ve Google için fotoğrafı kısaca tarif et", required: true }
+          - { label: "Fotoğraf Altyazısı", name: "caption", widget: "string", required: false }
+      - label: "Ülke"
+        name: "ulke"
+        widget: "select"
+        multiple: true
+        hint: "Listede olmayan ülke için site yöneticisine haber ver"
+        # Yeni ülke eklemek için bu listeye satır ekle (static/admin/config.yml)
+        options:
+          - "Türkiye"
+          - "İtalya"
+          - "Fransa"
+          - "İspanya"
+          - "Yunanistan"
+          - "Japonya"
+          - "Almanya"
+          - "Hollanda"
+          - "İngiltere"
+          - "Portekiz"
+      - label: "Şehir"
+        name: "sehir"
+        widget: "list"
+        hint: "Şehir adını yaz, Enter'a bas. Birden fazla şehir ekleyebilirsin."
+        field: { label: "Şehir Adı", name: "ad", widget: "string" }
+      - label: "Etiketler"
+        name: "etiket"
+        widget: "list"
+        required: false
+        hint: "Örn: Yemek, Doğa, Bütçe, Rehber"
+        field: { label: "Etiket", name: "ad", widget: "string" }
+      - { label: "Özet", name: "summary", widget: "text", hint: "Ana sayfadaki kartta görünecek 1-2 cümlelik özet" }
+      - { label: "Yazı İçeriği", name: "body", widget: "markdown", hint: "Yazını buraya yaz. Araya fotoğraf eklemek için araç çubuğundaki + işaretini kullan." }
+
+  - name: "sayfalar"
+    label: "Sabit Sayfalar"
+    editor:
+      preview: false
+    files:
+      - label: "Hakkımda"
+        name: "hakkimda"
+        file: "content/hakkimda.md"
+        fields:
+          - { label: "Başlık", name: "title", widget: "string" }
+          - { label: "İçerik", name: "body", widget: "markdown" }

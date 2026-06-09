@@ -1,0 +1,92 @@
+# ── Seyahat Blogu ── Hugo yapılandırması
+# Netlify'a bağlandıktan sonra baseURL'i gerçek domain ile değiştir.
+baseURL = "https://example.netlify.app/"
+locale = "tr-TR"
+defaultContentLanguage = "tr"
+title = "Seyahat Günlüğü"
+theme = "PaperMod"
+
+enableRobotsTXT = false # robots.txt static/ klasöründen geliyor
+removePathAccents = true # Türkçe karakterli URL'leri ASCII'ye çevirir (ş→s, ı→i)
+enableEmoji = true
+
+[pagination]
+  pagerSize = 9
+
+[minify]
+  disableXML = true
+
+# Kategori sistemi: ülke ana kategori, şehir alt kategori, etiket serbest
+[taxonomies]
+  ulke = "ulke"
+  sehir = "sehir"
+  etiket = "etiket"
+
+# PaperMod arama sayfası için JSON çıktısı gerekli
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+[params]
+  env = "production"
+  title = "Seyahat Günlüğü"
+  description = "Ülke ülke, şehir şehir seyahat notları, rehberler ve fotoğraflar"
+  keywords = ["seyahat", "gezi", "seyahat blogu", "gezi rehberi"]
+  author = "Elif"
+  DateFormat = "2 January 2006"
+  defaultTheme = "light"
+  disableThemeToggle = true
+
+  ShowReadingTime = true
+  ShowShareButtons = true
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
+  ShowCodeCopyButtons = false
+  ShowRssButtonInSectionTermList = true
+  ShowToc = false
+  hideSummary = false
+
+  [params.homeInfoParams]
+    Title = "Merhaba, hoş geldin ✈️"
+    Content = "Gezdiğim ülkeleri, şehirleri ve yollarda biriktirdiklerimi burada paylaşıyorum. Menüden ülkelere göz atabilir ya da arama yapabilirsin."
+
+  # Yazı kartlarında ve yazı sayfasında kapak fotoğrafı
+  [params.cover]
+    hidden = false
+    hiddenInList = false
+    hiddenInSingle = false
+    responsiveImages = true
+
+  [params.fuseOpts] # arama hassasiyeti
+    isCaseSensitive = false
+    threshold = 0.4
+    keys = ["title", "summary", "content"]
+
+[menu]
+  [[menu.main]]
+    identifier = "ulkeler"
+    name = "Ülkeler"
+    url = "/ulke/"
+    weight = 10
+  [[menu.main]]
+    identifier = "sehirler"
+    name = "Şehirler"
+    url = "/sehir/"
+    weight = 20
+  [[menu.main]]
+    identifier = "etiketler"
+    name = "Etiketler"
+    url = "/etiket/"
+    weight = 30
+  [[menu.main]]
+    identifier = "hakkimda"
+    name = "Hakkımda"
+    url = "/hakkimda/"
+    weight = 40
+  [[menu.main]]
+    identifier = "arama"
+    name = "Ara 🔍"
+    url = "/arama/"
+    weight = 50
+
+# Sosyal paylaşım kartları (Open Graph / Twitter) PaperMod temasında yerleşik.
+# Sitemap.xml ve canonical URL Hugo tarafından otomatik üretilir.

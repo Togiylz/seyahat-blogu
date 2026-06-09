@@ -1,0 +1,10 @@
+# Hugo build çıktıları
+public/
+resources/_gen/
+.hugo_build.lock
+
+# Editör / işletim sistemi
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
