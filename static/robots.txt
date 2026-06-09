@@ -2,5 +2,5 @@ User-agent: *
 Allow: /
 Disallow: /admin/
 
-# Domain bağlandıktan sonra adresi güncelle:
-Sitemap: https://example.netlify.app/sitemap.xml
+# Özel domain bağlanınca adresi güncelle:
+Sitemap: https://tourmaline-druid-34ee28.netlify.app/sitemap.xml

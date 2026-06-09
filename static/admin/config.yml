@@ -15,7 +15,7 @@ backend:
 
 locale: "tr" # panel arayüzü Türkçe
 
-site_url: https://example.netlify.app # TODO: gerçek domain ile değiştir
+site_url: https://tourmaline-druid-34ee28.netlify.app
 logo_url: ""
 
 # Genel medya klasörü (logo vb. için); yazı görselleri yazının kendi klasörüne gider

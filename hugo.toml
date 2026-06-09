@@ -1,6 +1,6 @@
 # ── Seyahat Blogu ── Hugo yapılandırması
-# Netlify'a bağlandıktan sonra baseURL'i gerçek domain ile değiştir.
-baseURL = "https://example.netlify.app/"
+# Özel domain bağlanınca baseURL'i onunla değiştir.
+baseURL = "https://tourmaline-druid-34ee28.netlify.app/"
 locale = "tr-TR"
 defaultContentLanguage = "tr"
 title = "Seyahat Günlüğü"
