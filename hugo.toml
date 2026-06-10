@@ -1,6 +1,5 @@
 # ── Seyahat Blogu ── Hugo yapılandırması
-# Özel domain bağlanınca baseURL'i onunla değiştir.
-baseURL = "https://tourmaline-druid-34ee28.netlify.app/"
+baseURL = "https://eydhukuk.com/"
 locale = "tr-TR"
 defaultContentLanguage = "tr"
 title = "Seyahat Günlüğü"

@@ -13,8 +13,8 @@ backend:
     deleteMedia: "Görsel silindi: {{path}}"
 
 locale: "tr" # panel arayüzü Türkçe
-site_url: https://tourmaline-druid-34ee28.netlify.app
-display_url: https://tourmaline-druid-34ee28.netlify.app
+site_url: https://eydhukuk.com
+display_url: https://eydhukuk.com
 logo_url: /images/admin-logo.svg
 
 # Dosya/adres isimleri her zaman temiz ASCII olsun (ş→s, ı→i, boşluk→tire)
