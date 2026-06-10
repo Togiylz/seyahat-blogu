@@ -31,7 +31,7 @@ collections:
   - name: "posts"
     label: "Blog Yazıları"
     label_singular: "Yazı"
-    description: "Yeni bir gezi yazısı için sağ üstteki 'Yazı' butonuna bas. Yazıyı kaydedip Yayınla dediğinde site 1 dakika içinde kendiliğinden güncellenir."
+    description: "Yeni yazı için sağ üstteki 'Yazı' butonuna bas. Yazarken sağ tarafta yazının sitede nasıl görüneceğini canlı izleyebilirsin. Yayınla dediğinde site 1 dakika içinde güncellenir."
     folder: "content/posts"
     create: true
     delete: true
@@ -49,21 +49,21 @@ collections:
         field: date
         pattern: "\\d{4}"
     editor:
-      preview: false
+      preview: true
     fields:
-      - label: "Başlık"
+      - label: "📝 Başlık"
         name: "title"
         widget: "string"
         hint: "Yazının başlığı. Örnek: Kapadokya'da 3 Gün"
 
-      - label: "Yayın Tarihi"
+      - label: "📅 Yayın Tarihi"
         name: "date"
         widget: "datetime"
         date_format: "DD.MM.YYYY"
         time_format: false
         hint: "Bugünün tarihi otomatik gelir, genelde dokunmana gerek yok."
 
-      - label: "Kapak Fotoğrafı"
+      - label: "🖼️ Kapak Fotoğrafı"
         name: "cover"
         widget: "object"
         collapsed: false
@@ -84,7 +84,7 @@ collections:
             required: false
             hint: "İsteğe bağlı — fotoğrafın altında görünen küçük not."
 
-      - label: "Ülke"
+      - label: "🌍 Ülke"
         name: "ulke"
         widget: "select"
         multiple: true
@@ -104,25 +104,25 @@ collections:
           - "İngiltere"
           - "Portekiz"
 
-      - label: "Şehir"
+      - label: "🏙️ Şehir"
         name: "sehir"
         widget: "list"
         hint: "Şehrin adını yaz ve 'Ekle' butonuna bas. Birden fazla şehir ekleyebilirsin."
         field: { label: "Şehir Adı", name: "ad", widget: "string" }
 
-      - label: "Etiketler"
+      - label: "🏷️ Etiketler"
         name: "etiket"
         widget: "list"
         required: false
         hint: "İsteğe bağlı. Örnek: Yemek, Doğa, Bütçe, Rehber, Müze"
         field: { label: "Etiket", name: "ad", widget: "string" }
 
-      - label: "Özet"
+      - label: "💬 Özet"
         name: "summary"
         widget: "text"
         hint: "Ana sayfadaki yazı kartında görünecek 1-2 cümle. Okuyucuyu yazıya çekecek kısa bir tanıtım yaz."
 
-      - label: "Yazı"
+      - label: "✏️ Yazı"
         name: "body"
         widget: "markdown"
         buttons: ["bold", "italic", "heading-two", "heading-three", "quote", "bulleted-list", "numbered-list", "link"]
@@ -133,14 +133,14 @@ collections:
     label: "Sabit Sayfalar"
     description: "Blog yazısı olmayan sayfalar. Şimdilik sadece Hakkımda sayfası var."
     editor:
-      preview: false
+      preview: true
     files:
       - label: "Hakkımda"
         name: "hakkimda"
         file: "content/hakkimda.md"
         fields:
-          - { label: "Başlık", name: "title", widget: "string" }
-          - label: "İçerik"
+          - { label: "📝 Başlık", name: "title", widget: "string" }
+          - label: "✏️ İçerik"
             name: "body"
             widget: "markdown"
             buttons: ["bold", "italic", "heading-two", "heading-three", "quote", "bulleted-list", "numbered-list", "link"]
