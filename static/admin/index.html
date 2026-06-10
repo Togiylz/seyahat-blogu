@@ -5,6 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex" />
   <title>Seyahat Günlüğü — Yönetim Paneli</title>
+  <style>
+    /* Giriş ekranı markalama (bozulursa Decap varsayılanına döner, işlev etkilenmez) */
+    body { background: #FAFAF8; }
+    [class*="AuthenticationPage"] button,
+    [class*="StyledAuthenticationPage"] button {
+      background-color: #4A7C59 !important;
+      color: #ffffff !important;
+      border-radius: 999px !important;
+      padding: 12px 28px !important;
+      font-weight: 600 !important;
+    }
+    [class*="AuthenticationPage"] button:hover,
+    [class*="StyledAuthenticationPage"] button:hover {
+      background-color: #3A6147 !important;
+    }
+  </style>
 </head>
 <body>
   <!-- Decap CMS: tam paket (tüm diller dahil, config.yml'deki locale: tr çalışır) -->

@@ -1,6 +1,5 @@
 # ── Decap CMS yapılandırması ──
-# GitHub'a push ettikten sonra "repo:" satırını kendi kullanıcıadı/repoadı ile güncelle.
-# Giriş: Netlify panelinde GitHub OAuth provider kurulmalı
+# Giriş: Netlify üzerinde GitHub OAuth provider kurulu olmalı
 # (Site configuration → Access & security → OAuth → Install provider → GitHub).
 backend:
   name: github
@@ -14,11 +13,17 @@ backend:
     deleteMedia: "Görsel silindi: {{path}}"
 
 locale: "tr" # panel arayüzü Türkçe
-
 site_url: https://tourmaline-druid-34ee28.netlify.app
-logo_url: ""
+display_url: https://tourmaline-druid-34ee28.netlify.app
+logo_url: /images/admin-logo.svg
 
-# Genel medya klasörü (logo vb. için); yazı görselleri yazının kendi klasörüne gider
+# Dosya/adres isimleri her zaman temiz ASCII olsun (ş→s, ı→i, boşluk→tire)
+slug:
+  encoding: "ascii"
+  clean_accents: true
+  sanitize_replacement: "-"
+
+# Genel medya klasörü; yazı görselleri yazının kendi klasörüne gider
 media_folder: "static/images/uploads"
 public_folder: "/images/uploads"
 
@@ -26,6 +31,7 @@ collections:
   - name: "posts"
     label: "Blog Yazıları"
     label_singular: "Yazı"
+    description: "Yeni bir gezi yazısı için sağ üstteki 'Yazı' butonuna bas. Yazıyı kaydedip Yayınla dediğinde site 1 dakika içinde kendiliğinden güncellenir."
     folder: "content/posts"
     create: true
     delete: true
@@ -34,27 +40,58 @@ collections:
     media_folder: ""
     public_folder: ""
     slug: "{{slug}}"
-    summary: "{{title}} · {{day}}.{{month}}.{{year}}"
+    summary: "{{title}} — {{fields.ulke}} · {{day}}.{{month}}.{{year}}"
     sortable_fields: ["date", "title"]
+    view_groups:
+      - label: "Ülkeye Göre"
+        field: ulke
+      - label: "Yıla Göre"
+        field: date
+        pattern: "\\d{4}"
     editor:
       preview: false
     fields:
-      - { label: "Başlık", name: "title", widget: "string", hint: "Yazının başlığı, örn: Kapadokya'da 3 Gün" }
-      - { label: "Yayın Tarihi", name: "date", widget: "datetime" }
+      - label: "Başlık"
+        name: "title"
+        widget: "string"
+        hint: "Yazının başlığı. Örnek: Kapadokya'da 3 Gün"
+
+      - label: "Yayın Tarihi"
+        name: "date"
+        widget: "datetime"
+        date_format: "DD.MM.YYYY"
+        time_format: false
+        hint: "Bugünün tarihi otomatik gelir, genelde dokunmana gerek yok."
+
       - label: "Kapak Fotoğrafı"
         name: "cover"
         widget: "object"
         collapsed: false
+        hint: "Yazının en üstünde ve ana sayfadaki kartında görünecek fotoğraf."
         fields:
-          - { label: "Fotoğraf", name: "image", widget: "image", hint: "Sürükle-bırak ile yükleyebilirsin" }
-          - { label: "Fotoğraf Açıklaması (alt metin)", name: "alt", widget: "string", hint: "Görme engelli okuyucular ve Google için fotoğrafı kısaca tarif et", required: true }
-          - { label: "Fotoğraf Altyazısı", name: "caption", widget: "string", required: false }
+          - label: "Fotoğraf"
+            name: "image"
+            widget: "image"
+            hint: "Tıkla ve bilgisayarından seç ya da sürükleyip bırak."
+          - label: "Fotoğraf Açıklaması"
+            name: "alt"
+            widget: "string"
+            required: true
+            hint: "Fotoğrafta ne göründüğünü kısaca yaz (örn: Gün doğumunda peri bacaları üzerinde balonlar). Google ve görme engelli okuyucular için önemli."
+          - label: "Fotoğraf Altyazısı"
+            name: "caption"
+            widget: "string"
+            required: false
+            hint: "İsteğe bağlı — fotoğrafın altında görünen küçük not."
+
       - label: "Ülke"
         name: "ulke"
         widget: "select"
         multiple: true
-        hint: "Listede olmayan ülke için site yöneticisine haber ver"
-        # Yeni ülke eklemek için bu listeye satır ekle (static/admin/config.yml)
+        min: 1
+        max: 3
+        hint: "Yazının hangi ülkeyle ilgili olduğunu seç. Listede olmayan ülke için Tolga'ya haber ver."
+        # Yeni ülke eklemek için bu listeye satır ekle
         options:
           - "Türkiye"
           - "İtalya"
@@ -66,22 +103,35 @@ collections:
           - "Hollanda"
           - "İngiltere"
           - "Portekiz"
+
       - label: "Şehir"
         name: "sehir"
         widget: "list"
-        hint: "Şehir adını yaz, Enter'a bas. Birden fazla şehir ekleyebilirsin."
+        hint: "Şehrin adını yaz ve 'Ekle' butonuna bas. Birden fazla şehir ekleyebilirsin."
         field: { label: "Şehir Adı", name: "ad", widget: "string" }
+
       - label: "Etiketler"
         name: "etiket"
         widget: "list"
         required: false
-        hint: "Örn: Yemek, Doğa, Bütçe, Rehber"
+        hint: "İsteğe bağlı. Örnek: Yemek, Doğa, Bütçe, Rehber, Müze"
         field: { label: "Etiket", name: "ad", widget: "string" }
-      - { label: "Özet", name: "summary", widget: "text", hint: "Ana sayfadaki kartta görünecek 1-2 cümlelik özet" }
-      - { label: "Yazı İçeriği", name: "body", widget: "markdown", hint: "Yazını buraya yaz. Araya fotoğraf eklemek için araç çubuğundaki + işaretini kullan." }
+
+      - label: "Özet"
+        name: "summary"
+        widget: "text"
+        hint: "Ana sayfadaki yazı kartında görünecek 1-2 cümle. Okuyucuyu yazıya çekecek kısa bir tanıtım yaz."
+
+      - label: "Yazı"
+        name: "body"
+        widget: "markdown"
+        buttons: ["bold", "italic", "heading-two", "heading-three", "quote", "bulleted-list", "numbered-list", "link"]
+        editor_components: ["image"]
+        hint: "Yazını buraya yaz. Ara başlık için H2, araya fotoğraf eklemek için + işaretine basıp 'Image' seç."
 
   - name: "sayfalar"
     label: "Sabit Sayfalar"
+    description: "Blog yazısı olmayan sayfalar. Şimdilik sadece Hakkımda sayfası var."
     editor:
       preview: false
     files:
@@ -90,4 +140,8 @@ collections:
         file: "content/hakkimda.md"
         fields:
           - { label: "Başlık", name: "title", widget: "string" }
-          - { label: "İçerik", name: "body", widget: "markdown" }
+          - label: "İçerik"
+            name: "body"
+            widget: "markdown"
+            buttons: ["bold", "italic", "heading-two", "heading-three", "quote", "bulleted-list", "numbered-list", "link"]
+            editor_components: ["image"]
