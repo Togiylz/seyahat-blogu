@@ -1,0 +1,160 @@
+# ── Yazar Paneli (e-posta girişli) — DecapBridge ──
+# Bu panel /admin ile AYNI içeriği düzenler; tek fark giriş yöntemi:
+# /admin → GitHub girişi (Tolga) · /panel → e-posta+şifre (Elif, DecapBridge daveti)
+backend:
+  name: git-gateway
+  repo: Togiylz/seyahat-blogu
+  branch: main
+  # DecapBridge PKCE girişi (site: Seyahat Günlüğü)
+  auth_type: pkce
+  base_url: https://auth.decapbridge.com
+  auth_endpoint: /sites/69b839ab-ef18-45a7-baf2-4ac9cbbc3c4c/pkce
+  auth_token_endpoint: /sites/69b839ab-ef18-45a7-baf2-4ac9cbbc3c4c/token
+  gateway_url: https://gateway.decapbridge.com
+  commit_messages:
+    create: "Yeni yazı: {{slug}} — {{author-name}} ({{author-login}})"
+    update: "Güncelleme: {{slug}} — {{author-name}} ({{author-login}})"
+    delete: "Silindi: {{slug}} — {{author-name}} ({{author-login}})"
+    uploadMedia: "Görsel yüklendi: {{path}} — {{author-name}}"
+    deleteMedia: "Görsel silindi: {{path}} — {{author-name}}"
+
+# PKCE kullanıcı bilgisi alanları (DecapBridge önerisi)
+auth:
+  email_claim: email
+  first_name_claim: first_name
+  last_name_claim: last_name
+  avatar_url_claim: avatar_url
+
+locale: "tr" # panel arayüzü Türkçe
+site_url: https://eydhukuk.com
+display_url: https://eydhukuk.com
+logo_url: /images/admin-logo.svg
+
+# Dosya/adres isimleri her zaman temiz ASCII olsun (ş→s, ı→i, boşluk→tire)
+slug:
+  encoding: "ascii"
+  clean_accents: true
+  sanitize_replacement: "-"
+
+# Genel medya klasörü; yazı görselleri yazının kendi klasörüne gider
+media_folder: "static/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "posts"
+    label: "Blog Yazıları"
+    label_singular: "Yazı"
+    description: "Yeni yazı için sağ üstteki 'Yazı' butonuna bas. Yazarken sağ tarafta yazının sitede nasıl görüneceğini canlı izleyebilirsin. Yayınla dediğinde site 1 dakika içinde güncellenir."
+    folder: "content/posts"
+    create: true
+    delete: true
+    # Her yazı kendi klasöründe: content/posts/yazi-adi/index.md + görselleri
+    path: "{{slug}}/index"
+    media_folder: ""
+    public_folder: ""
+    slug: "{{slug}}"
+    summary: "{{title}} — {{fields.ulke}} · {{day}}.{{month}}.{{year}}"
+    sortable_fields: ["date", "title"]
+    view_groups:
+      - label: "Ülkeye Göre"
+        field: ulke
+      - label: "Yıla Göre"
+        field: date
+        pattern: "\\d{4}"
+    editor:
+      preview: true
+    fields:
+      - label: "📝 Başlık"
+        name: "title"
+        widget: "string"
+        hint: "Yazının başlığı. Örnek: Kapadokya'da 3 Gün"
+
+      - label: "📅 Yayın Tarihi"
+        name: "date"
+        widget: "datetime"
+        date_format: "DD.MM.YYYY"
+        time_format: false
+        hint: "Bugünün tarihi otomatik gelir, genelde dokunmana gerek yok."
+
+      - label: "🖼️ Kapak Fotoğrafı"
+        name: "cover"
+        widget: "object"
+        collapsed: false
+        hint: "Yazının en üstünde ve ana sayfadaki kartında görünecek fotoğraf."
+        fields:
+          - label: "Fotoğraf"
+            name: "image"
+            widget: "image"
+            hint: "Tıkla ve bilgisayarından seç ya da sürükleyip bırak."
+          - label: "Fotoğraf Açıklaması"
+            name: "alt"
+            widget: "string"
+            required: true
+            hint: "Fotoğrafta ne göründüğünü kısaca yaz (örn: Gün doğumunda peri bacaları üzerinde balonlar). Google ve görme engelli okuyucular için önemli."
+          - label: "Fotoğraf Altyazısı"
+            name: "caption"
+            widget: "string"
+            required: false
+            hint: "İsteğe bağlı — fotoğrafın altında görünen küçük not."
+
+      - label: "🌍 Ülke"
+        name: "ulke"
+        widget: "select"
+        multiple: true
+        min: 1
+        max: 3
+        hint: "Yazının hangi ülkeyle ilgili olduğunu seç. Listede olmayan ülke için Tolga'ya haber ver."
+        # Yeni ülke eklemek için bu listeye satır ekle (static/admin/config.yml'de de aynısını yap)
+        options:
+          - "Türkiye"
+          - "İtalya"
+          - "Fransa"
+          - "İspanya"
+          - "Yunanistan"
+          - "Japonya"
+          - "Almanya"
+          - "Hollanda"
+          - "İngiltere"
+          - "Portekiz"
+
+      - label: "🏙️ Şehir"
+        name: "sehir"
+        widget: "list"
+        hint: "Şehrin adını yaz ve 'Ekle' butonuna bas. Birden fazla şehir ekleyebilirsin."
+        field: { label: "Şehir Adı", name: "ad", widget: "string" }
+
+      - label: "🏷️ Etiketler"
+        name: "etiket"
+        widget: "list"
+        required: false
+        hint: "İsteğe bağlı. Örnek: Yemek, Doğa, Bütçe, Rehber, Müze"
+        field: { label: "Etiket", name: "ad", widget: "string" }
+
+      - label: "💬 Özet"
+        name: "summary"
+        widget: "text"
+        hint: "Ana sayfadaki yazı kartında görünecek 1-2 cümle. Okuyucuyu yazıya çekecek kısa bir tanıtım yaz."
+
+      - label: "✏️ Yazı"
+        name: "body"
+        widget: "markdown"
+        buttons: ["bold", "italic", "heading-two", "heading-three", "quote", "bulleted-list", "numbered-list", "link"]
+        editor_components: ["image"]
+        hint: "Yazını buraya yaz. Ara başlık için H2, araya fotoğraf eklemek için + işaretine basıp 'Image' seç."
+
+  - name: "sayfalar"
+    label: "Sabit Sayfalar"
+    description: "Blog yazısı olmayan sayfalar. Şimdilik sadece Hakkımda sayfası var."
+    editor:
+      preview: true
+    files:
+      - label: "Hakkımda"
+        name: "hakkimda"
+        file: "content/hakkimda.md"
+        fields:
+          - { label: "📝 Başlık", name: "title", widget: "string" }
+          - label: "✏️ İçerik"
+            name: "body"
+            widget: "markdown"
+            buttons: ["bold", "italic", "heading-two", "heading-three", "quote", "bulleted-list", "numbered-list", "link"]
+            editor_components: ["image"]
