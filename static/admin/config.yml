@@ -127,7 +127,7 @@ collections:
         widget: "markdown"
         buttons: ["bold", "italic", "heading-two", "heading-three", "quote", "bulleted-list", "numbered-list", "link"]
         editor_components: ["image"]
-        hint: "Yazını buraya yaz. Ara başlık için H2, araya fotoğraf eklemek için + işaretine basıp 'Image' seç."
+        hint: "Yazını buraya yaz. Ara başlık için H2 kullan. Araya fotoğraf eklemek için + işaretine basıp 'Image' seç ya da fotoğraf dosyasını sürükle-bırak. (Fotoğrafı kopyala-yapıştır YAPMA, çalışmaz.)"
 
   - name: "sayfalar"
     label: "Sabit Sayfalar"

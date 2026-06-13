@@ -282,6 +282,25 @@ body {
     border-radius: 0 var(--radius) var(--radius) 0;
 }
 
+/* Yazı içine eklenen fotoğraflar */
+.post-content figure.post-figure {
+    margin: 1.9rem 0;
+}
+.post-content figure.post-figure img {
+    width: 100%;
+    height: auto;
+    border-radius: 14px;
+    display: block;
+    box-shadow: 0 4px 14px rgba(31, 41, 55, 0.10);
+}
+.post-content figure.post-figure figcaption {
+    text-align: center;
+    color: var(--secondary);
+    font-size: 14px;
+    font-style: italic;
+    margin-top: 10px;
+}
+
 /* ───────────── Etiketler, kategoriler, sayfalama ───────────── */
 
 .post-tags a,

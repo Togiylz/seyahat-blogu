@@ -23,9 +23,34 @@
   </style>
 </head>
 <body>
-  <!-- Decap CMS: tam paket (tüm diller dahil, config.yml'deki locale: tr çalışır) -->
-  <script src="https://unpkg.com/decap-cms@^3.8.4/dist/decap-cms.js"></script>
+  <!-- Decap CMS: sürüm sabit (reproducibility + sürpriz regresyon önleme) -->
+  <script src="https://unpkg.com/decap-cms@3.14.0/dist/decap-cms.js"></script>
   <script>
+    // ── Görsel-yapıştırma çökmesini engelle (Decap bug #7585) ──
+    // Panodan resim YAPIŞTIRMAK editörü çökertiyor. Resim yapıştırmayı yakalayıp
+    // engelliyoruz ve kullanıcıyı doğru yola (+ butonu / sürükle-bırak) yönlendiriyoruz.
+    // Sadece resim DOSYASI yapıştırınca devreye girer; metin yapıştırma etkilenmez.
+    document.addEventListener("paste", function (e) {
+      try {
+        var dt = e.clipboardData || window.clipboardData;
+        if (!dt || !dt.items) return;
+        for (var i = 0; i < dt.items.length; i++) {
+          if (dt.items[i].kind === "file" && dt.items[i].type.indexOf("image/") === 0) {
+            e.preventDefault();
+            e.stopPropagation();
+            alert(
+              "Fotoğrafı doğrudan yapıştıramazsın 🙂\n\n" +
+              "Yazının içine fotoğraf eklemek için:\n" +
+              "• Yazı alanındaki + işaretine bas ve 'Image' seç\n" +
+              "• ya da fotoğraf dosyasını yazının üstüne sürükleyip bırak\n\n" +
+              "Kapak fotoğrafı için yukarıdaki '🖼️ Kapak Fotoğrafı' alanını kullan."
+            );
+            return;
+          }
+        }
+      } catch (err) { /* sessizce geç — yakalama başarısızsa normal akış sürer */ }
+    }, true); // capture phase: editör işlemeden önce yakala
+
     // ── Canlı önizleme: yazının sitedeki görünümüne yakın bir sunum ──
     // Sitenin paleti ve fontları (Playfair Display / Inter / Lora) ile.
     CMS.registerPreviewStyle(
