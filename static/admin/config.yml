@@ -103,6 +103,7 @@ collections:
           - "Hollanda"
           - "İngiltere"
           - "Portekiz"
+          - "Avustralya"
 
       - label: "🏙️ Şehir"
         name: "sehir"
@@ -129,19 +130,66 @@ collections:
         editor_components: ["image"]
         hint: "Yazını buraya yaz. Ara başlık için H2 kullan. Araya fotoğraf eklemek için + işaretine basıp 'Image' seç ya da fotoğraf dosyasını sürükle-bırak. (Fotoğrafı kopyala-yapıştır YAPMA, çalışmaz.)"
 
+  - name: "rotalar"
+    label: "Hazır Rotalar (Bölgeler)"
+    label_singular: "Bölge"
+    description: "Menüdeki 'Hazır Rotalar' altında çıkan bölgeler. Her bölge, seçtiğin ülkelerle etiketli TÜM yazıları otomatik listeler. İstersen yeni bölge de ekleyebilirsin (örn. Amerika)."
+    folder: "content/rotalar"
+    create: true
+    delete: true
+    path: "{{slug}}/index"
+    media_folder: ""
+    public_folder: ""
+    slug: "{{slug}}"
+    sortable_fields: ["weight", "title"]
+    editor:
+      preview: false
+    fields:
+      - { label: "📛 Bölge Adı", name: "title", widget: "string", hint: "Menüde ve sayfada görünecek ad. Örn: Türkiye, Avrupa, Asya" }
+      - { label: "🔢 Menü Sırası", name: "weight", widget: "number", default: 50, value_type: "int", hint: "Küçük sayı menüde önce gelir. (Türkiye 10, Avustralya 20, Avrupa 30, Asya 40)" }
+      - label: "🌍 Hangi ülkeleri kapsıyor?"
+        name: "ulkeler"
+        widget: "select"
+        multiple: true
+        min: 1
+        hint: "Bu sayfada, seçtiğin ülkelerle etiketli tüm yazılar otomatik toplanır. Örn: Avrupa için İtalya, Fransa, İspanya seç."
+        options:
+          - "Türkiye"
+          - "İtalya"
+          - "Fransa"
+          - "İspanya"
+          - "Yunanistan"
+          - "Japonya"
+          - "Almanya"
+          - "Hollanda"
+          - "İngiltere"
+          - "Portekiz"
+          - "Avustralya"
+      - { label: "✏️ Tanıtım Yazısı (isteğe bağlı)", name: "body", widget: "markdown", required: false, hint: "Bölge sayfasının üstünde çıkacak kısa giriş. Boş bırakabilirsin." }
+
   - name: "sayfalar"
     label: "Sabit Sayfalar"
-    description: "Blog yazısı olmayan sayfalar. Şimdilik sadece Hakkımda sayfası var."
+    label_singular: "Sayfa"
+    description: "Hakkımda, Seyahat İpuçları, Dil gibi bağımsız sayfalar. Yeni sayfa açıp menüye ekleyebilirsin."
+    folder: "content/sayfalar"
+    create: true
+    delete: true
+    path: "{{slug}}/index"
+    media_folder: ""
+    public_folder: ""
+    slug: "{{slug}}"
+    sortable_fields: ["weight", "title"]
     editor:
       preview: true
-    files:
-      - label: "Hakkımda"
-        name: "hakkimda"
-        file: "content/hakkimda.md"
-        fields:
-          - { label: "📝 Başlık", name: "title", widget: "string" }
-          - label: "✏️ İçerik"
-            name: "body"
-            widget: "markdown"
-            buttons: ["bold", "italic", "heading-two", "heading-three", "quote", "bulleted-list", "numbered-list", "link"]
-            editor_components: ["image"]
+    fields:
+      - { label: "📝 Sayfa Başlığı", name: "title", widget: "string" }
+      - { label: "📌 Menüde göster", name: "menude", widget: "boolean", default: true, hint: "Açıksa üst menüde görünür. Kapatırsan sayfa var olur ama menüde çıkmaz." }
+      - { label: "🔢 Menü Sırası", name: "weight", widget: "number", default: 50, value_type: "int", hint: "Küçük sayı menüde önce gelir." }
+      - { label: "(otomatik) tarih/okuma gizle", name: "hidemeta", widget: "hidden", default: true }
+      - { label: "(otomatik) içindekiler gizle", name: "showtoc", widget: "hidden", default: false }
+      - label: "✏️ İçerik"
+        name: "body"
+        widget: "markdown"
+        buttons: ["bold", "italic", "heading-two", "heading-three", "quote", "bulleted-list", "numbered-list", "link"]
+        editor_components: ["image"]
+        hint: "Sayfa içeriğini buraya yaz. Fotoğraf için + işaretine basıp 'Image' seç ya da sürükle-bırak. (Kopyala-yapıştır değil.)"

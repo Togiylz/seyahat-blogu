@@ -1,0 +1,39 @@
+{{- define "main" }}
+<header class="page-header">
+  {{- partial "breadcrumbs.html" . }}
+  <h1>{{ .Title }}</h1>
+  {{- with .Params.aciklama }}<div class="post-description">{{ . | markdownify }}</div>{{ end }}
+</header>
+
+{{- with .Content }}
+<div class="post-content">{{ . }}</div>
+{{- end }}
+
+{{- /* Bu bölgenin kapsadığı ülkelerle etiketli tüm yazılar otomatik listelenir */ -}}
+{{- $kapsam := .Params.ulkeler }}
+{{- $posts := slice }}
+{{- with $kapsam }}
+  {{- $posts = where (where site.RegularPages "Section" "posts") "Params.ulke" "intersect" $kapsam }}
+{{- end }}
+
+{{- if $posts }}
+<div class="rota-grid">
+  {{- range $posts.ByDate.Reverse }}
+  <article class="post-entry">
+    {{- $isHidden := (.Param "cover.hiddenInList") | default (.Param "cover.hidden") | default false }}
+    {{- partial "cover.html" (dict "cxt" . "IsSingle" false "isHidden" $isHidden) }}
+    <header class="entry-header">
+      <h2 class="entry-hint-parent">{{ .Title }}</h2>
+    </header>
+    <div class="entry-content">
+      <p>{{ .Summary | plainify | htmlUnescape }}{{ if .Truncated }}...{{ end }}</p>
+    </div>
+    <footer class="entry-footer">{{ partial "post_meta.html" . }}</footer>
+    <a class="entry-link" aria-label="{{ .Title | plainify }} yazısına git" href="{{ .Permalink }}"></a>
+  </article>
+  {{- end }}
+</div>
+{{- else }}
+<p class="rota-empty">Bu bölge için henüz yazı eklenmemiş. Çok yakında! ✈️</p>
+{{- end }}
+{{- end }}{{/* end main */}}

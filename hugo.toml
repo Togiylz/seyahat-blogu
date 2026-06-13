@@ -26,6 +26,11 @@ copyright = "© 2026 Seyahat Günlüğü"
 [outputs]
   home = ["HTML", "RSS", "JSON"]
 
+# Sabit sayfalar temiz adreste açılsın: /seyahat-ipuclari/, /dil/, /hakkimda/
+# :contentbasename = klasör adını birebir kullanır (başlıktaki Türkçe karakterlerden etkilenmez)
+[permalinks]
+  sayfalar = "/:contentbasename/"
+
 [params]
   env = "production"
   title = "Seyahat Günlüğü"
@@ -35,6 +40,7 @@ copyright = "© 2026 Seyahat Günlüğü"
   DateFormat = "2 January 2006"
   defaultTheme = "light"
   disableThemeToggle = true
+  mainSections = ["posts"] # ana sayfada sadece blog yazıları listelenir (rotalar/sayfalar değil)
 
   ShowReadingTime = true
   ShowShareButtons = true
@@ -61,32 +67,9 @@ copyright = "© 2026 Seyahat Günlüğü"
     threshold = 0.4
     keys = ["title", "summary", "content"]
 
-[menu]
-  [[menu.main]]
-    identifier = "ulkeler"
-    name = "Ülkeler"
-    url = "/ulke/"
-    weight = 10
-  [[menu.main]]
-    identifier = "sehirler"
-    name = "Şehirler"
-    url = "/sehir/"
-    weight = 20
-  [[menu.main]]
-    identifier = "etiketler"
-    name = "Etiketler"
-    url = "/etiket/"
-    weight = 30
-  [[menu.main]]
-    identifier = "hakkimda"
-    name = "Hakkımda"
-    url = "/hakkimda/"
-    weight = 40
-  [[menu.main]]
-    identifier = "arama"
-    name = "Ara 🔍"
-    url = "/arama/"
-    weight = 50
+# Menü, özel header partial'ında dinamik kuruluyor (layouts/_partials/header.html):
+#   Hazır Rotalar ▾ (rotalar bölümündeki sayfalardan) · menüye işaretli sabit sayfalar · Ara
+# Bu yüzden burada [menu] tanımı yok.
 
 # Sosyal paylaşım kartları (Open Graph / Twitter) PaperMod temasında yerleşik.
 # Sitemap.xml ve canonical URL Hugo tarafından otomatik üretilir.

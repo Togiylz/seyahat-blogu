@@ -1,8 +1,9 @@
 ---
 title: "Hakkımda"
-summary: "Bu blogun yazarı hakkında"
-showtoc: false
+menude: true
+weight: 90
 hidemeta: true
+showtoc: false
 comments: false
 ---
 
