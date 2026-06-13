@@ -211,10 +211,13 @@ collections:
     media_folder: ""
     public_folder: ""
     slug: "{{slug}}"
+    # Sadece gerçek bölgeler listelensin; _index.md (Hazır Rotalar sayfası) burada çıkmasın
+    filter: { field: "tip", value: "bolge" }
     sortable_fields: ["weight", "title"]
     editor:
       preview: true
     fields:
+      - { label: "(otomatik) tür", name: "tip", widget: "hidden", default: "bolge" }
       - { label: "📛 Bölge Adı", name: "title", widget: "string", hint: "Menüde ve sayfada görünecek ad. Örn: Türkiye, Avrupa, Asya" }
       - { label: "🔢 Menü Sırası", name: "weight", widget: "number", default: 50, value_type: "int", hint: "Küçük sayı menüde önce gelir. (Türkiye 10, Avustralya 20, Avrupa 30, Asya 40)" }
       - label: "🌍 Hangi ülkeleri kapsıyor?"
@@ -292,3 +295,12 @@ collections:
         fields:
           - { label: "📛 Sayfa Başlığı", name: "title", widget: "string", hint: "Örn: Hazır Rotalar" }
           - { label: "💬 Açıklama", name: "aciklama", widget: "text", hint: "Başlığın altındaki kısa açıklama yazısı." }
+          - label: "🖼️ Üst Görsel"
+            name: "cover"
+            widget: "object"
+            collapsed: true
+            required: false
+            hint: "İsteğe bağlı. Hazır Rotalar sayfasının en üstünde büyük görünecek görsel."
+            fields:
+              - { label: "Fotoğraf", name: "image", widget: "image", required: false }
+              - { label: "Fotoğraf Açıklaması", name: "alt", widget: "string", required: false }

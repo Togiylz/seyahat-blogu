@@ -1,4 +1,10 @@
 {{- define "main" }}
+{{- /* İsteğe bağlı üst görsel (Site Metinleri → Hazır Rotalar'dan ayarlanır) */ -}}
+{{- with .Params.cover }}{{- with .image }}{{- with ($.Resources.Get .) }}
+<figure class="rota-cover">
+  <img src="{{ .RelPermalink }}" alt="{{ $.Params.cover.alt | default $.Title }}" loading="eager">
+</figure>
+{{- end }}{{- end }}{{- end }}
 <header class="page-header">
   <h1>{{ .Title }}</h1>
   {{- with .Params.aciklama }}<div class="post-description">{{ . | markdownify }}</div>{{ end }}
