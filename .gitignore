@@ -3,6 +3,10 @@ public/
 resources/_gen/
 .hugo_build.lock
 
+# Yerel test paneli (Decap test-repo) — yayına gitmez, sadece localhost denemesi
+static/admin-test/
+decap.json
+
 # Editör / işletim sistemi
 .DS_Store
 Thumbs.db

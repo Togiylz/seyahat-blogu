@@ -270,3 +270,25 @@ collections:
         buttons: ["bold", "italic", "heading-two", "heading-three", "quote", "bulleted-list", "numbered-list", "link"]
         editor_components: ["image"]
         hint: "Sayfa içeriğini buraya yaz. Fotoğraf için + işaretine basıp 'Image' seç ya da sürükle-bırak. (Kopyala-yapıştır değil.)"
+
+  - name: "site"
+    label: "Site Metinleri"
+    label_singular: "Metin"
+    description: "Ana sayfanın ve Hazır Rotalar sayfasının üst yazıları. Buradan yeni sayfa eklenmez; sadece var olan metinleri düzenlersin."
+    editor:
+      preview: false
+    files:
+      - label: "Ana Sayfa — Üst Yazı"
+        name: "anasayfa"
+        file: "content/_index.md"
+        description: "Ana sayfanın en üstündeki büyük başlık ve tanıtım cümlesi."
+        fields:
+          - { label: "🏷️ Büyük Başlık", name: "hero_baslik", widget: "string", hint: "Ana sayfanın en üstünde büyük yazan başlık." }
+          - { label: "💬 Tanıtım Cümlesi", name: "hero_metin", widget: "text", hint: "Başlığın altındaki 1-2 cümlelik tanıtım." }
+      - label: "Hazır Rotalar — Sayfa Yazısı"
+        name: "rotalar_index"
+        file: "content/rotalar/_index.md"
+        description: "Menüde 'Hazır Rotalar'a tıklayınca açılan sayfanın başlığı ve açıklaması."
+        fields:
+          - { label: "📛 Sayfa Başlığı", name: "title", widget: "string", hint: "Örn: Hazır Rotalar" }
+          - { label: "💬 Açıklama", name: "aciklama", widget: "text", hint: "Başlığın altındaki kısa açıklama yazısı." }

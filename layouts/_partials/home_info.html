@@ -1,4 +1,8 @@
-{{- with site.Params.homeInfoParams }}
+{{- /* Üst yazı (hero) metinleri ana sayfanın kendi frontmatter'ından gelir
+       (content/_index.md → panelden "Site Metinleri → Ana Sayfa" ile düzenlenir).
+       Eski homeInfoParams yedek olarak kalır. */ -}}
+{{- $baslik := .Params.hero_baslik | default site.Params.homeInfoParams.Title }}
+{{- $metin := .Params.hero_metin | default site.Params.homeInfoParams.Content }}
 <section class="hero">
   <div class="hero-media">
     <img src="{{ "images/hero.jpg" | relURL }}" alt="" loading="eager" fetchpriority="high">
@@ -6,16 +10,12 @@
   </div>
   <div class="hero-content">
     <p class="hero-eyebrow">{{ site.Title }}</p>
-    <h1>{{ .Title | markdownify }}</h1>
-    <div class="hero-text">
-      {{ $opts := dict "display" "block" }}
-      {{ .Content | $.Page.RenderString $opts }}
-    </div>
+    <h1>{{ $baslik | markdownify }}</h1>
+    <div class="hero-text">{{ $metin | markdownify }}</div>
     <div class="hero-actions">
-      <a class="hero-btn hero-btn--primary" href="{{ "ulke/" | relLangURL }}">Ülkelere Göz At</a>
+      <a class="hero-btn hero-btn--primary" href="{{ "rotalar/" | relLangURL }}">Hazır Rotalar</a>
       <a class="hero-btn hero-btn--ghost" href="{{ "hakkimda/" | relLangURL }}">Hakkımda</a>
     </div>
   </div>
 </section>
 <h2 class="section-title">Son Yazılar</h2>
-{{- end -}}

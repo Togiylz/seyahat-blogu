@@ -20,6 +20,33 @@
     [class*="StyledAuthenticationPage"] button:hover {
       background-color: #3A6147 !important;
     }
+
+    /* ── Form okunabilirliği ── Decap alan etiketlerini BÜYÜK HARF/teknik
+       görünümden çıkarıp sade, anlaşılır hale getirir. */
+    [class*="FieldLabel"] {
+      text-transform: none !important;
+      letter-spacing: 0 !important;
+      font-size: 15px !important;
+      font-weight: 700 !important;
+      color: #1F2937 !important;
+    }
+    [class*="ControlHint"] {
+      text-transform: none !important;
+      font-style: normal !important;
+      font-size: 13px !important;
+      color: #4A7C59 !important;
+      line-height: 1.5 !important;
+      margin-top: 4px !important;
+    }
+    /* Her alan ayrı bir blok → ne düzenlediğin net olsun */
+    [class*="ControlPaneContainer"] > [class*="ControlContainer"] {
+      padding: 14px 0 16px !important;
+      border-bottom: 1px solid #ECECE8 !important;
+    }
+    [class*="ControlPaneContainer"] {
+      padding-left: 18px !important;
+      padding-right: 18px !important;
+    }
   </style>
 </head>
 <body>
