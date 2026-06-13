@@ -127,18 +127,48 @@
     });
     CMS.registerPreviewTemplate("posts", YaziOnizleme);
 
-    // Hakkımda sayfası önizlemesi
+    // Sabit sayfa önizlemesi (üst görsel + başlık + içerik)
     var SayfaOnizleme = createClass({
       render: function () {
         var entry = this.props.entry;
+        var kapak = entry.getIn(["data", "cover", "image"]);
+        var kapakUrl = kapak ? this.props.getAsset(kapak) : null;
         return h("div", { className: "pv-wrap" },
-          h("span", { className: "pv-note" }, "👁 Önizleme"),
+          h("span", { className: "pv-note" }, "👁 Önizleme — sayfanın sitede görüneceği hâli"),
+          kapakUrl
+            ? h("img", { className: "pv-cover", src: kapakUrl.toString(), alt: "" })
+            : h("div", { className: "pv-empty" }, "İstersen üst görsel ekleyebilirsin (sayfanın en üstünde büyük görünür)"),
           h("h1", { className: "pv-title" }, entry.getIn(["data", "title"]) || ""),
           h("div", { className: "pv-body" }, this.props.widgetFor("body"))
         );
       }
     });
     CMS.registerPreviewTemplate("sayfalar", SayfaOnizleme);
+
+    // Bölge (rota) önizlemesi — üst görsel, başlık, kapsanan ülkeler, tanıtım
+    var RotaOnizleme = createClass({
+      render: function () {
+        var entry = this.props.entry;
+        var kapak = entry.getIn(["data", "cover", "image"]);
+        var kapakUrl = kapak ? this.props.getAsset(kapak) : null;
+        var ulkeler = listeYap(entry.getIn(["data", "ulkeler"]));
+        return h("div", { className: "pv-wrap" },
+          h("span", { className: "pv-note" }, "👁 Önizleme — bölge sayfasının üst kısmı"),
+          kapakUrl
+            ? h("img", { className: "pv-cover", src: kapakUrl.toString(), alt: "" })
+            : h("div", { className: "pv-empty" }, "İstersen üst görsel ekle (sayfanın en üstünde büyük görünür)"),
+          h("h1", { className: "pv-title" }, entry.getIn(["data", "title"]) || "Bölge adı"),
+          ulkeler.length
+            ? h("div", { className: "pv-cips" }, ulkeler.map(function (c, i) {
+                return h("span", { className: "pv-cip", key: i }, String(c));
+              }))
+            : null,
+          h("div", { className: "pv-body" }, this.props.widgetFor("body")),
+          h("div", { className: "pv-summary" }, "↓ Bunun altında, seçtiğin ülkelerle etiketli tüm yazılar otomatik listelenecek.")
+        );
+      }
+    });
+    CMS.registerPreviewTemplate("rotalar", RotaOnizleme);
   </script>
 </body>
 </html>

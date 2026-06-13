@@ -327,6 +327,14 @@ body {
 
 /* ───────────────── Açılır menü (Hazır Rotalar ▾) ───────────────── */
 
+/* PaperMod #menu'ye overflow:auto veriyor; bu, açılır menüyü kırpıp menüde
+   kaydırma çubuğu çıkarıyordu. Görünür yap, dar ekranda alta sarsın. */
+#menu {
+    overflow: visible;
+    flex-wrap: wrap;
+    row-gap: 6px;
+}
+
 #menu .has-dropdown {
     position: relative;
 }
@@ -420,6 +428,55 @@ body {
     padding: 4px 0 0;
     color: var(--accent-dark);
     font-weight: 500;
+}
+
+/* Kapaksız kartta sarmalayıcı görünmez (ortalanmış görünüm korunur) */
+.rota-card .rota-card-body {
+    display: contents;
+}
+
+/* Kapaklı bölge kartı: üstte görsel, altta başlık */
+.rota-card.has-cover {
+    justify-content: flex-start;
+    background: var(--entry);
+    padding: 0;
+    overflow: hidden;
+}
+.rota-card-cover {
+    width: 100%;
+    height: 150px;
+}
+.rota-card-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.35s ease;
+}
+.rota-card.has-cover:hover .rota-card-cover img {
+    transform: scale(1.05);
+}
+.rota-card.has-cover .rota-card-body {
+    display: block;
+    padding: 15px 18px 18px;
+}
+
+/* Bölge tek sayfasındaki üst görsel (hero) */
+.rota-cover {
+    margin: 10px 0 20px;
+}
+.rota-cover img {
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+    border-radius: 16px;
+    display: block;
+    box-shadow: 0 6px 18px rgba(31, 41, 55, 0.12);
+}
+@media (max-width: 600px) {
+    .rota-cover img {
+        height: 210px;
+    }
 }
 
 .rota-empty {

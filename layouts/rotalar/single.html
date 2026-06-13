@@ -1,4 +1,10 @@
 {{- define "main" }}
+{{- /* İsteğe bağlı üst görsel (kapak) */ -}}
+{{- with .Params.cover }}{{- with .image }}{{- with ($.Resources.Get .) }}
+<figure class="rota-cover">
+  <img src="{{ .RelPermalink }}" alt="{{ $.Params.cover.alt | default $.Title }}" loading="eager">
+</figure>
+{{- end }}{{- end }}{{- end }}
 <header class="page-header">
   {{- partial "breadcrumbs.html" . }}
   <h1>{{ .Title }}</h1>

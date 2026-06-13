@@ -10,17 +10,23 @@
 
 <div class="rota-grid">
   {{- range .Pages.ByWeight }}
+  {{- $bolge := . }}
   {{- $kapsam := .Params.ulkeler }}
   {{- $n := 0 }}
   {{- with $kapsam }}
     {{- $n = len (where (where site.RegularPages "Section" "posts") "Params.ulke" "intersect" $kapsam) }}
   {{- end }}
-  <article class="post-entry rota-card">
-    <header class="entry-header">
-      <h2>{{ .Title }}</h2>
-    </header>
-    <div class="entry-content">
-      <p>{{ if gt $n 0 }}{{ $n }} yazı{{ else }}Yakında{{ end }}</p>
+  {{- $kapakUrl := "" }}
+  {{- with .Params.cover }}{{- with .image }}{{- with ($bolge.Resources.Get .) }}{{ $kapakUrl = .RelPermalink }}{{ end }}{{ end }}{{ end }}
+  <article class="post-entry rota-card{{ if $kapakUrl }} has-cover{{ end }}">
+    {{- if $kapakUrl }}<div class="rota-card-cover"><img src="{{ $kapakUrl }}" alt="{{ $bolge.Title }}" loading="lazy"></div>{{ end }}
+    <div class="rota-card-body">
+      <header class="entry-header">
+        <h2>{{ .Title }}</h2>
+      </header>
+      <div class="entry-content">
+        <p>{{ if gt $n 0 }}{{ $n }} yazı{{ else }}Yakında{{ end }}</p>
+      </div>
     </div>
     <a class="entry-link" aria-label="{{ .Title }} bölgesine git" href="{{ .Permalink }}"></a>
   </article>

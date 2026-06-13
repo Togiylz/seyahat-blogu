@@ -103,20 +103,90 @@ collections:
         multiple: true
         min: 1
         max: 3
-        hint: "Yazının hangi ülkeyle ilgili olduğunu seç. Listede olmayan ülke için Tolga'ya haber ver."
-        # Yeni ülke eklemek için bu listeye satır ekle (static/admin/config.yml'de de aynısını yap)
-        options:
-          - "Türkiye"
-          - "İtalya"
-          - "Fransa"
-          - "İspanya"
-          - "Yunanistan"
-          - "Japonya"
+        hint: "Yazının hangi ülke(ler)le ilgili olduğunu seç. Yazınca listede aratabilirsin. (Bölge sayfaları bu seçime göre otomatik dolar.)"
+        # Ülke listesi: aşağıdaki bölgeler de (rotalar) aynı listeyi kullanır (&ulkeler / *ulkeler).
+        # Yeni ülke eklemek için bu listeye bir satır ekle (admin/config.yml'de de aynısını yap).
+        options: &ulkeler
           - "Almanya"
-          - "Hollanda"
-          - "İngiltere"
-          - "Portekiz"
+          - "Amerika Birleşik Devletleri"
+          - "Arjantin"
+          - "Arnavutluk"
           - "Avustralya"
+          - "Avusturya"
+          - "Azerbaycan"
+          - "Belçika"
+          - "Birleşik Arap Emirlikleri"
+          - "Brezilya"
+          - "Bulgaristan"
+          - "Çekya"
+          - "Çin"
+          - "Danimarka"
+          - "Endonezya"
+          - "Estonya"
+          - "Fas"
+          - "Filipinler"
+          - "Finlandiya"
+          - "Fransa"
+          - "Güney Afrika"
+          - "Güney Kore"
+          - "Gürcistan"
+          - "Hindistan"
+          - "Hırvatistan"
+          - "Hollanda"
+          - "Irak"
+          - "İngiltere"
+          - "İran"
+          - "İrlanda"
+          - "İspanya"
+          - "İsrail"
+          - "İsveç"
+          - "İsviçre"
+          - "İtalya"
+          - "İzlanda"
+          - "Japonya"
+          - "Kamboçya"
+          - "Kanada"
+          - "Karadağ"
+          - "Katar"
+          - "Kazakistan"
+          - "Kenya"
+          - "Kıbrıs"
+          - "Kolombiya"
+          - "Kosova"
+          - "Küba"
+          - "Letonya"
+          - "Litvanya"
+          - "Lübnan"
+          - "Lüksemburg"
+          - "Macaristan"
+          - "Maldivler"
+          - "Malezya"
+          - "Malta"
+          - "Meksika"
+          - "Mısır"
+          - "Norveç"
+          - "Özbekistan"
+          - "Peru"
+          - "Polonya"
+          - "Portekiz"
+          - "Romanya"
+          - "Rusya"
+          - "Singapur"
+          - "Sırbistan"
+          - "Slovakya"
+          - "Slovenya"
+          - "Sri Lanka"
+          - "Şili"
+          - "Tayland"
+          - "Tayvan"
+          - "Tunus"
+          - "Türkiye"
+          - "Ukrayna"
+          - "Umman"
+          - "Ürdün"
+          - "Vietnam"
+          - "Yeni Zelanda"
+          - "Yunanistan"
 
       - label: "🏙️ Şehir"
         name: "sehir"
@@ -156,7 +226,7 @@ collections:
     slug: "{{slug}}"
     sortable_fields: ["weight", "title"]
     editor:
-      preview: false
+      preview: true
     fields:
       - { label: "📛 Bölge Adı", name: "title", widget: "string", hint: "Menüde ve sayfada görünecek ad. Örn: Türkiye, Avrupa, Asya" }
       - { label: "🔢 Menü Sırası", name: "weight", widget: "number", default: 50, value_type: "int", hint: "Küçük sayı menüde önce gelir. (Türkiye 10, Avustralya 20, Avrupa 30, Asya 40)" }
@@ -166,19 +236,17 @@ collections:
         multiple: true
         min: 1
         hint: "Bu sayfada, seçtiğin ülkelerle etiketli tüm yazılar otomatik toplanır. Örn: Avrupa için İtalya, Fransa, İspanya seç."
-        options:
-          - "Türkiye"
-          - "İtalya"
-          - "Fransa"
-          - "İspanya"
-          - "Yunanistan"
-          - "Japonya"
-          - "Almanya"
-          - "Hollanda"
-          - "İngiltere"
-          - "Portekiz"
-          - "Avustralya"
-      - { label: "✏️ Tanıtım Yazısı (isteğe bağlı)", name: "body", widget: "markdown", required: false, hint: "Bölge sayfasının üstünde çıkacak kısa giriş. Boş bırakabilirsin." }
+        options: *ulkeler
+      - label: "🖼️ Üst Görsel"
+        name: "cover"
+        widget: "object"
+        collapsed: false
+        required: false
+        hint: "İsteğe bağlı. Bölge sayfasının en üstünde büyük görünecek kapak fotoğrafı. Eklemezsen sadece başlık görünür."
+        fields:
+          - { label: "Fotoğraf", name: "image", widget: "image", required: false }
+          - { label: "Fotoğraf Açıklaması", name: "alt", widget: "string", required: false }
+      - { label: "✏️ Tanıtım Yazısı", name: "body", widget: "markdown", required: false, hint: "Bölge sayfasının üstünde çıkacak kısa giriş." }
 
   - name: "sayfalar"
     label: "Sabit Sayfalar"
@@ -196,6 +264,15 @@ collections:
       preview: true
     fields:
       - { label: "📝 Sayfa Başlığı", name: "title", widget: "string" }
+      - label: "🖼️ Üst Görsel"
+        name: "cover"
+        widget: "object"
+        collapsed: true
+        required: false
+        hint: "İsteğe bağlı. Sayfanın en üstünde büyük görünecek kapak fotoğrafı."
+        fields:
+          - { label: "Fotoğraf", name: "image", widget: "image", required: false }
+          - { label: "Fotoğraf Açıklaması", name: "alt", widget: "string", required: false }
       - { label: "📌 Menüde göster", name: "menude", widget: "boolean", default: true, hint: "Açıksa üst menüde görünür. Kapatırsan sayfa var olur ama menüde çıkmaz." }
       - { label: "🔢 Menü Sırası", name: "weight", widget: "number", default: 50, value_type: "int", hint: "Küçük sayı menüde önce gelir." }
       - { label: "(otomatik) tarih/okuma gizle", name: "hidemeta", widget: "hidden", default: true }
